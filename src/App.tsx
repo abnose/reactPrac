@@ -3,7 +3,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
-import { incremented } from "./redux/counter/slice";
+import { incremented, incrementedWithDelay } from "./redux/counter/slice";
 import { AppDispatch, RootState } from "./redux/store";
 import { multiply } from "./redux/multiply/slice";
 function App() {
@@ -38,6 +38,13 @@ function App() {
           }}
         >
           count is {mCount}
+        </button>
+        <button
+          onClick={() => {
+            dispatch(incrementedWithDelay(5));
+          }}
+        >
+          count with delay is {count}
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
