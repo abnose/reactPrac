@@ -1,42 +1,106 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+body {
+  margin: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100vh;
+}
+.mainContainer {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  overflow: hidden;
+  margin-top: -1.25em;
+}
+.header {
+  background: rgb(0, 0, 0);
+  padding: 0.25em;
+  box-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.addToDo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+input {
+  padding: 0.35em 0.5em;
+  width: 250px;
+  height: 30px;
+  margin-right: 0.5em;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+button {
+  padding: 0.9em 1.5em;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.subContainer {
+  width: 80%;
+  height: 400px;
+  margin: auto auto;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  margin-top: 5em;
 }
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
 .card {
-  padding: 2em;
+  width: 97%;
+  height: 50px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 0.5em;
 }
-
-.read-the-docs {
-  color: #888;
+.completed {
+  background: rgba(52, 85, 3, 0.301);
+  margin-left: auto;
+  outline: none;
+  border: none;
+  border: 1px solid gray;
+  position: absolute;
+  border-radius: 10px;
+  cursor: pointer;
+  right: 100px;
+}
+.remove {
+  background: rgba(85, 3, 3, 0.301);
+  margin-left: auto;
+  outline: none;
+  border: none;
+  border: 1px solid gray;
+  position: absolute;
+  border-radius: 10px;
+  cursor: pointer;
+  right: 10px;
+}
+.text {
+  margin-left: 1em;
+}
+.completedCon {
+  width: 47%;
+  margin: 0 0.2em;
+  border-radius: 10px;
+  padding: 0.5em;
+  border: 1px solid rgba(0, 128, 0, 0.301);
+  box-shadow: 0 0px 1px white;
+}
+.notCompletedCon {
+  width: 47%;
+  margin: 0 0.2em;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 0, 0, 0.288);
+  box-shadow: 0 0px 1px white;
+  padding: 0.5em;
 }
