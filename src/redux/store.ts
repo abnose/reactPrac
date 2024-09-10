@@ -1,20 +1,14 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { counterSlicer } from "./counter/slice";
-import { multiplySlicer } from "./multiply/slice";
-import { combineReducers } from "redux";
-
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import counterReducer from "./counter/slice";
+import multiplyReducer, { multiply } from "./multiply/slice";
 const rootReducer = combineReducers({
-  counterSlicer,
-  multiplySlicer,
+  counter: counterReducer,
+  multiplyer: multiplyReducer,
 });
-
-// const store = configureStore({
-//   reducer: [counterSlice.reducer, multiplySlice],
-// });
 
 export const store = configureStore({
   reducer: rootReducer,
 });
 
-// Can still subscribe to the store
-store.subscribe(() => console.log(store.getState()));
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

@@ -1,13 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface counterSlice {
+  value: number;
+}
+
+const initialState: counterSlice = {
+  value: 0,
+};
+
 export const counterSlice = createSlice({
   name: "counter",
-  initialState: {
-    value: 0,
-  },
+  initialState,
   reducers: {
     incremented: (state) => {
-      state.value *= 1;
+      state.value += 1;
     },
     decremented: (state) => {
       state.value -= 1;
@@ -16,12 +22,4 @@ export const counterSlice = createSlice({
 });
 
 export const { incremented, decremented } = counterSlice.actions;
-export const counterSlicer = counterSlice.reducer;
-
-// Still pass action objects to `dispatch`, but they're created for us
-// store.dispatch(incremented());
-// {value: 1}
-// store.dispatch(incremented());
-// {value: 2}
-// store.dispatch(decremented());
-// {value: 1}
+export default counterSlice.reducer;

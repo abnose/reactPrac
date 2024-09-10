@@ -4,16 +4,15 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
 import { incremented } from "./redux/counter/slice";
+import { AppDispatch, RootState } from "./redux/store";
+import { multiply } from "./redux/multiply/slice";
 function App() {
-  const [count, setCount] = useState(0);
-  // console.log(store.dispatch);
-  // const { counterSlice } = useSelector((counterSlice) => counterSlice);
+  const count = useSelector((state: RootState) => state?.counter?.value);
+  const dispatch = useDispatch<AppDispatch>();
+  console.log(count);
 
-  // useSelector(({ counterSlice }) => counterSlice)?.counterSlice;
-  const dispatch = useDispatch();
-  const data = useSelector((counterSlicer) => counterSlicer);
-  dispatch(incremented());
-  console.log(data.counterSlicer.value);
+  const mCount = useSelector((state: RootState) => state?.multiplyer?.value);
+
   return (
     <>
       <div>
@@ -26,8 +25,19 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => dispatch(incremented())}>
-          count is {data.counterSlicer.value}
+        <button
+          onClick={() => {
+            dispatch(incremented());
+          }}
+        >
+          count is {count}
+        </button>
+        <button
+          onClick={() => {
+            dispatch(multiply());
+          }}
+        >
+          count is {mCount}
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
