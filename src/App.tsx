@@ -37,11 +37,14 @@ const reducerHandler = (state: IState[], action: IAction) => {
         },
       ];
       initTodo = addedItem;
+      showingTodo = addedItem;
       return addedItem;
     case "remove":
       const filterItem = state?.filter((item) => item.id !== payload);
       initTodo = filterItem;
-      return { ...state, ...filterItem };
+      showingTodo = filterItem;
+
+      return [...filterItem];
     case "completed":
       const completedItem = state?.map((item) => {
         if (item.id == payload) {
@@ -50,12 +53,13 @@ const reducerHandler = (state: IState[], action: IAction) => {
         return item;
       });
       initTodo = completedItem;
-      return { ...state, ...completedItem };
+      showingTodo = completedItem;
+      return [...completedItem];
     case "filter":
       const filterDataBy = initTodo?.filter(
         (item) => item.isCompleted == payload
       );
-      return [...state, ...filterDataBy];
+      return [...filterDataBy];
     default:
       return { ...state };
   }
@@ -75,24 +79,41 @@ function App() {
   };
 
   useMemo(() => {
-    console.log(type);
+    // console.log(showingTodo);
+    // console.log("showing");
+    // console.log(initTodo);
+    // console.log("init");
+    // console.log("---------------------------");
+    // showingTodo = initTodo.filter((item) => item.isCompleted == true);
+    // console.log(type);
     switch (type) {
       case "all":
-        return state;
+        showingTodo = initTodo;
+        return;
       case "completed":
         // initTodo = state.filter((item) => item.isCompleted == true);
-        dispatchReducer({ type: "filter", payload: true });
+        // dispatchReducer({ type: "filter", payload: true });
+        showingTodo = initTodo.filter((item) => item.isCompleted == true);
+        // console.log("completed loginc");
+        return;
       case "notCompleted":
         // initTodo = state.filter((item) => item.isCompleted == false);
-        dispatchReducer({ type: "filter", payload: false });
+        // dispatchReducer({ type: "filter", payload: false });
+        // console.log("not loginc");
+        showingTodo = initTodo.filter((item) => item.isCompleted == false);
+        return;
       default:
         return state;
     }
-  }, [type]);
+  }, [type, state]);
 
-  console.log(state);
-
-  showingTodo = state;
+  // console.log(state);
+  console.log(showingTodo);
+  console.log("showing+++++++++++++++");
+  console.log(initTodo);
+  console.log("init++++++++++++++++++");
+  console.log("++++++++++++++++++++++");
+  // showingTodo = state;
   return (
     <>
       <div className="mainContainer">
@@ -126,8 +147,8 @@ function App() {
           </div>
         </div>
         <div className="subContainer">
-          {state.length ? (
-            state?.map((item) => (
+          {showingTodo.length ? (
+            showingTodo?.map((item) => (
               <>
                 <div
                   key={item.id}
