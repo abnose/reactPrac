@@ -7,6 +7,8 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SnackbarProvider } from "notistack";
+import theme from "./configs/theme.ts";
+import { ThemeProvider } from "@mui/material/styles";
 const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -14,7 +16,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <QueryClientProvider client={queryClient}>
         <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
           <BrowserRouter>
-            <App />
+            <ThemeProvider theme={theme}>
+              <App />
+            </ThemeProvider>
           </BrowserRouter>
         </SnackbarProvider>
       </QueryClientProvider>

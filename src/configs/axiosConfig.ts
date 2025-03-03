@@ -16,7 +16,8 @@ api.interceptors.response.use(
     return response;
   },
   (error: AxiosError) => {
-    const errorMessage = error.response?.data?.message || "An error occurred!";
+
+    const errorMessage = error.response?.title || "An error occurred!";
     showSnackbar(errorMessage, "error");
     return Promise.reject(error);
   }

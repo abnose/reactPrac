@@ -1,16 +1,16 @@
 import {
   Box,
   Button,
-  Checkbox,
   CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
-  FormControlLabel,
+  FormControl,
   IconButton,
-  Switch,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Tooltip,
   Typography,
@@ -34,22 +34,16 @@ const Home = () => {
   const defaultValues = {
     title: "",
     description: "",
-    isCompleted: true,
+    isCompleted: "all",
   };
   const validationSchema = yup.object({
-    title: yup.string().required("This Field Is Required"),
-    description: yup.string().required("This Field Is Required"),
-    isCompleted: yup.boolean(),
+    title: yup.string().notRequired(),
+    description: yup.string().notRequired(),
+    isCompleted: yup.string().notRequired(),
   });
   const {
     control,
     handleSubmit,
-    getValues,
-    watch,
-    setValue,
-    reset,
-    setError,
-    clearErrors,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validationSchema),
@@ -58,9 +52,9 @@ const Home = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { tasks, status, error } = useSelector(
-    (state: RootState) => state?.task
-  );
+  const { tasks, status } = useSelector((state: RootState) => state?.task);
+
+  const [showingTasks, setShowingTasks] = useState(tasks);
 
   useEffect(() => {
     dispatch(fetchTasks());
@@ -68,7 +62,7 @@ const Home = () => {
 
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = (taskId: number) => {
+  const handleClickOpen = (taskId: number | any) => {
     id = taskId;
     setOpen(true);
   };
@@ -81,11 +75,33 @@ const Home = () => {
     await dispatch(deleteTask({ taskId: id, closeModal })).unwrap();
   };
 
-  const handleNavigation = (taskId: number) => {
+  const handleNavigation = (taskId: number | any) => {
     navigate(`/task/${taskId}`);
   };
 
-  const onSubmit = () => {};
+  useEffect(() => {
+    if (tasks?.length) {
+      setShowingTasks(tasks);
+    }
+  }, [tasks]);
+
+  const onSubmit = (data: any) => {
+    const { title, description, isCompleted } = data;
+    const filteredTasks = tasks.filter((task) => {
+      const matchesTitle = title
+        ? task.title.toLowerCase().includes(title.toLowerCase())
+        : true;
+      const matchesDescription = description
+        ? task.description.toLowerCase().includes(description.toLowerCase())
+        : true;
+      const matchesCompletion =
+        isCompleted !== "all"
+          ? task.completed.toString() === isCompleted
+          : true;
+      return matchesTitle && matchesDescription && matchesCompletion;
+    });
+    setShowingTasks(filteredTasks);
+  };
 
   return (
     <>
@@ -100,10 +116,8 @@ const Home = () => {
                   render={({ field }) => (
                     <TextField
                       id="title"
-                      // disabled={doAdd.isLoading || doEdit.isLoading}
                       label={
                         <div className="flex gap-1">
-                          <p style={{ fontSize: "14px", color: "red" }}>*</p>
                           <p>title</p>
                         </div>
                       }
@@ -129,10 +143,8 @@ const Home = () => {
                   render={({ field }) => (
                     <TextField
                       id="description"
-                      // disabled={doAdd.isLoading || doEdit.isLoading}
                       label={
                         <div className="flex gap-1">
-                          <p style={{ fontSize: "14px", color: "red" }}>*</p>
                           <p>description</p>
                         </div>
                       }
@@ -152,25 +164,45 @@ const Home = () => {
                     />
                   )}
                 />
-                <FormControlLabel
-                  control={
-                    <Controller
-                      name="isCompleted"
-                      control={control}
-                      render={({ field }) => (
-                        <Checkbox
-                          {...field}
-                          checked={!!field.value}
-                          onChange={(e) => field.onChange(e.target.checked)}
-                        />
-                      )}
-                    />
-                  }
-                  label="completed"
-                />
-                <Box className="flex justify-end items-center">
+
+                <FormControl fullWidth>
+                  <Controller
+                    name="isCompleted"
+                    control={control}
+                    render={({ field }) => (
+                      <>
+                        <InputLabel id="demo-simple-select-label">
+                          status
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={field.value}
+                          label="status"
+                          onChange={(e) => {
+                            field.onChange(e.target.value);
+                          }}
+                        >
+                          <MenuItem value={"all"}>all</MenuItem>
+                          <MenuItem value={true}>completed</MenuItem>
+                          <MenuItem value={false}>not completed</MenuItem>
+                        </Select>
+                      </>
+                    )}
+                  />
+                </FormControl>
+                <Box className="flex gap-2 justify-end items-center">
                   <Button type="submit" color="success" variant="outlined">
                     search
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setShowingTasks(tasks);
+                    }}
+                    color="error"
+                    variant="outlined"
+                  >
+                    clear
                   </Button>
                 </Box>
               </Box>
@@ -178,23 +210,28 @@ const Home = () => {
           </Box>
         </form>
       </Box>
-      <div className=" absolute left-1 top-1">
-        <Tooltip title="Add Task">
-          <Link to="/task" className="text-blue-500">
-            <IconButton color="success" aria-label="add">
-              <AddIcon />
-            </IconButton>
-          </Link>
-        </Tooltip>
-      </div>
-      <Box className="flex justify-center items-center w-full p-3">
+
+      <Box className="flex flex-col justify-center items-center w-full p-3">
         <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl text-center dark:text-white">
           Todo App
         </h1>
+        <div className="">
+          <Tooltip title="Add Task">
+            <Link to="/task" className="text-blue-500">
+              <Button
+                variant="outlined"
+                color="success"
+                startIcon={<AddIcon />}
+              >
+                Add Task
+              </Button>
+            </Link>
+          </Tooltip>
+        </div>
       </Box>
-      {tasks?.length !== 0 ? (
+      {showingTasks?.length !== 0 ? (
         <Box className="w-full flex flex-col gap-2 justify-center items-center">
-          {tasks?.map((item) => {
+          {showingTasks?.map((item) => {
             return (
               <div
                 key={item.id}
@@ -217,7 +254,6 @@ const Home = () => {
                   {item.description}
                 </p>
                 <Box className="flex">
-                  {/* <Switch checked={item?.completed} /> */}
                   <Typography>
                     {item.completed ? "completed" : "not completed"}
                   </Typography>
