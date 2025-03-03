@@ -3,6 +3,8 @@ body {
   box-sizing: border-box;
   width: 100%;
   height: 100vh;
+  direction: rtl;
+  color: wheat;
 }
 .mainContainer {
   width: 100%;
@@ -12,107 +14,4 @@ body {
   align-items: flex-start;
   flex-direction: column;
   overflow: hidden;
-  margin-top: -1.25em;
-}
-.header {
-  background: rgb(0, 0, 0);
-  padding: 0.25em;
-  box-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-.addToDo {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-input {
-  padding: 0.35em 0.5em;
-  width: 250px;
-  height: 30px;
-  margin-right: 0.5em;
-}
-button {
-  padding: 0.9em 1.5em;
-}
-.subContainer {
-  width: 80%;
-  height: 400px;
-  margin: auto auto;
-  display: flex;
-  flex-wrap: wrap;
-  overflow-y: auto;
-  margin-top: 5em;
-}
-.card {
-  width: 97%;
-  height: 50px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  /* From https://css.glass */
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  margin: 0.5em;
-}
-.completed {
-  background: rgba(52, 85, 3, 0.301);
-  margin-left: auto;
-  outline: none;
-  border: none;
-  border: 1px solid gray;
-  position: absolute;
-  border-radius: 10px;
-  cursor: pointer;
-  right: 100px;
-}
-.remove {
-  background: rgba(85, 3, 3, 0.301);
-  margin-left: auto;
-  outline: none;
-  border: none;
-  border: 1px solid gray;
-  position: absolute;
-  border-radius: 10px;
-  cursor: pointer;
-  right: 10px;
-}
-.text {
-  margin-left: 1em;
-}
-.completedCon {
-  width: 47%;
-  margin: 0 0.2em;
-  border-radius: 10px;
-  padding: 0.5em;
-  border: 1px solid rgba(0, 128, 0, 0.301);
-  box-shadow: 0 0px 1px white;
-}
-.notCompletedCon {
-  width: 47%;
-  margin: 0 0.2em;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 0, 0, 0.288);
-  box-shadow: 0 0px 1px white;
-  padding: 0.5em;
-}
-.filtersCon {
-  width: 100%;
-  margin-top: 2em;
-}
-
-.filters {
-  display: flex;
-  /* width: 100%; */
-  margin-right: 7em;
-  justify-content: center;
-  align-items: center;
 }

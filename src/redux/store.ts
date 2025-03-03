@@ -1,9 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./counter/slice";
-import multiplyReducer, { multiply } from "./multiply/slice";
+import taskReducer from "./manageTasks/slice";
 const rootReducer = combineReducers({
-  counter: counterReducer,
-  multiplyer: multiplyReducer,
+  task: taskReducer,
 });
 
 export const store = configureStore({
