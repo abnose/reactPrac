@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import api from "../../configs/axiosConfig";
+import { NavigateFunction } from "react-router-dom";
 
 // Task Interface
 interface Task {
-  id: number;
+  id?: number | string;
   title: string;
   description: string;
-  isCompleted: boolean;
+  completed: boolean;
 }
 
 // State Interface
@@ -36,12 +37,21 @@ export const fetchTasks = createAsyncThunk<Task[]>(
   }
 );
 
-// ✅ Add Task
-export const addTask = createAsyncThunk<Task, Omit<Task, "id">>(
+// ✅ Add Task with Navigation
+export const addTask = createAsyncThunk<
+  Task,
+  {
+    newTask: Omit<Task, "id">;
+    navigate: NavigateFunction;
+  },
+  { rejectValue: string }
+>(
   "tasks/addTask",
-  async (newTask, { rejectWithValue }) => {
+  async ({ newTask, navigate }, { rejectWithValue, dispatch }) => {
     try {
-      const response = await api.post("/tasks", newTask);
+      const response = await api.post("/api/tasks/", newTask);
+      // dispatch(fetchTasks()); // ✅ Refetch tasks after adding
+      navigate("/"); // ✅ Redirect to home page
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data || "Failed to add task");
@@ -49,12 +59,21 @@ export const addTask = createAsyncThunk<Task, Omit<Task, "id">>(
   }
 );
 
-// ✅ Edit Task
-export const editTask = createAsyncThunk<Task, Task>(
+// ✅ Edit Task with Navigation
+export const editTask = createAsyncThunk<
+  Task,
+  { updatedTask: Task; navigate: NavigateFunction },
+  { rejectValue: string }
+>(
   "tasks/editTask",
-  async (updatedTask, { rejectWithValue }) => {
+  async ({ updatedTask, navigate }, { rejectWithValue, dispatch }) => {
     try {
-      const response = await api.put(`/tasks/${updatedTask.id}`, updatedTask);
+      const response = await api.put(
+        `/api/tasks/${updatedTask.id}`,
+        updatedTask
+      );
+      // dispatch(fetchTasks()); // ✅ Refetch tasks after editing
+      navigate("/"); // ✅ Redirect to home page
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data || "Failed to edit task");
@@ -62,12 +81,18 @@ export const editTask = createAsyncThunk<Task, Task>(
   }
 );
 
-// ✅ Delete Task
-export const deleteTask = createAsyncThunk<number, number>(
+// ✅ Delete Task with Navigation
+export const deleteTask = createAsyncThunk<
+  number,
+  { taskId: number; closeModal: () => void },
+  { rejectValue: string }
+>(
   "tasks/deleteTask",
-  async (taskId, { rejectWithValue }) => {
+  async ({ taskId, closeModal }, { rejectWithValue, dispatch }) => {
     try {
-      await api.delete(`/tasks/${taskId}`);
+      await api.delete(`/api/tasks/${taskId}`);
+      dispatch(fetchTasks()); // ✅ Refetch tasks after deleting
+      closeModal(); // ✅ Redirect to home page
       return taskId;
     } catch (error: any) {
       return rejectWithValue(error.response?.data || "Failed to delete task");
@@ -87,7 +112,7 @@ const taskSlice = createSlice({
       })
       .addCase(fetchTasks.fulfilled, (state, action: PayloadAction<Task[]>) => {
         state.status = "succeeded";
-        state.tasks = action.payload;
+        state.tasks = action.payload.results;
       })
       .addCase(fetchTasks.rejected, (state, action) => {
         state.status = "failed";

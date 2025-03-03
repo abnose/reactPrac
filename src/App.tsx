@@ -19,7 +19,7 @@ function App() {
       <div className="mainContainer">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/task" element={<TaskCrud />} />
+          <Route path="/task/:id?" element={<TaskCrud />} />
         </Routes>
       </div>
     </>

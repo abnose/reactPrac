@@ -4,7 +4,7 @@ import { showSnackbar } from "./snackbarUtils";
 // Base Axios instance
 const api: AxiosInstance = axios.create({
   baseURL: "http://46.100.46.149:8069",
-  timeout: 5000,
+  timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -13,7 +13,6 @@ const api: AxiosInstance = axios.create({
 // Response interceptor
 api.interceptors.response.use(
   (response: AxiosResponse) => {
-    showSnackbar("Request successful!", "success");
     return response;
   },
   (error: AxiosError) => {
