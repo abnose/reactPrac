@@ -89,96 +89,95 @@ const Home = () => {
 
   return (
     <>
-      {/* <form onSubmit={handleSubmit(onSubmit)}>
-        <Box className="w-full h-[100vh] flex gap-2 justify-center items-center ">
-          <div className="w-[90%] p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-            <Box className="grid grid-cols-1 gap-2 mb-3 mt-[10px]">
-              <Controller
-                name="title"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="title"
-                    // disabled={doAdd.isLoading || doEdit.isLoading}
-                    label={
-                      <div className="flex gap-1">
-                        <p style={{ fontSize: "14px", color: "red" }}>*</p>
-                        <p>title</p>
-                      </div>
-                    }
-                    inputProps={{
-                      style: {
-                        direction: "ltr",
-                      },
-                    }}
-                    variant="outlined"
-                    placeholder="title"
-                    value={field.value}
-                    onChange={(e) => {
-                      field.onChange(e.target.value);
-                    }}
-                    error={!!errors.title}
-                    helperText={errors.title?.message}
-                  />
-                )}
-              />
-              <Controller
-                name="description"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="description"
-                    // disabled={doAdd.isLoading || doEdit.isLoading}
-                    label={
-                      <div className="flex gap-1">
-                        <p style={{ fontSize: "14px", color: "red" }}>*</p>
-                        <p>description</p>
-                      </div>
-                    }
-                    inputProps={{
-                      style: {
-                        direction: "ltr",
-                      },
-                    }}
-                    maxRows={4}
-                    multiline
-                    rows={4}
-                    variant="outlined"
-                    placeholder="description"
-                    value={field.value}
-                    onChange={(e) => {
-                      field.onChange(e.target.value);
-                    }}
-                    error={!!errors.description}
-                    helperText={errors.description?.message}
-                  />
-                )}
-              />
-              <FormControlLabel
-                control={
-                  <Controller
-                    name="isCompleted"
-                    control={control}
-                    render={({ field }) => (
-                      <Checkbox
-                        {...field}
-                        checked={!!field.value}
-                        onChange={(e) => field.onChange(e.target.checked)}
-                      />
-                    )}
-                  />
-                }
-                label="completed"
-              />
-              <Box className="flex justify-end items-center">
-                <Button type="submit" color="success" variant="outlined">
-                  search
-                </Button>
+      <Box className="w-full">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Box className="w-full mt-5 flex gap-2 justify-center items-center ">
+            <div className="w-[90%] p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+              <Box className="grid grid-cols-4 gap-2 mb-3 mt-[10px]">
+                <Controller
+                  name="title"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="title"
+                      // disabled={doAdd.isLoading || doEdit.isLoading}
+                      label={
+                        <div className="flex gap-1">
+                          <p style={{ fontSize: "14px", color: "red" }}>*</p>
+                          <p>title</p>
+                        </div>
+                      }
+                      inputProps={{
+                        style: {
+                          direction: "ltr",
+                        },
+                      }}
+                      variant="outlined"
+                      placeholder="title"
+                      value={field.value}
+                      onChange={(e) => {
+                        field.onChange(e.target.value);
+                      }}
+                      error={!!errors.title}
+                      helperText={errors.title?.message}
+                    />
+                  )}
+                />
+                <Controller
+                  name="description"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="description"
+                      // disabled={doAdd.isLoading || doEdit.isLoading}
+                      label={
+                        <div className="flex gap-1">
+                          <p style={{ fontSize: "14px", color: "red" }}>*</p>
+                          <p>description</p>
+                        </div>
+                      }
+                      inputProps={{
+                        style: {
+                          direction: "ltr",
+                        },
+                      }}
+                      variant="outlined"
+                      placeholder="description"
+                      value={field.value}
+                      onChange={(e) => {
+                        field.onChange(e.target.value);
+                      }}
+                      error={!!errors.description}
+                      helperText={errors.description?.message}
+                    />
+                  )}
+                />
+                <FormControlLabel
+                  control={
+                    <Controller
+                      name="isCompleted"
+                      control={control}
+                      render={({ field }) => (
+                        <Checkbox
+                          {...field}
+                          checked={!!field.value}
+                          onChange={(e) => field.onChange(e.target.checked)}
+                        />
+                      )}
+                    />
+                  }
+                  label="completed"
+                />
+                <Box className="flex justify-end items-center">
+                  <Button type="submit" color="success" variant="outlined">
+                    search
+                  </Button>
+                </Box>
               </Box>
-            </Box>
-          </div>
-        </Box>
-      </form> */}
+            </div>
+          </Box>
+        </form>
+      </Box>
       <div className=" absolute left-1 top-1">
         <Tooltip title="Add Task">
           <Link to="/task" className="text-blue-500">
