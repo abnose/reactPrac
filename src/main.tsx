@@ -11,17 +11,17 @@ import theme from "./configs/theme.ts";
 import { ThemeProvider } from "@mui/material/styles";
 const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
-          <BrowserRouter>
-            <ThemeProvider theme={theme}>
-              <App />
-            </ThemeProvider>
-          </BrowserRouter>
-        </SnackbarProvider>
-      </QueryClientProvider>
-    </Provider>
-  </StrictMode>
+  // <StrictMode>
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+        <BrowserRouter>
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
+        </BrowserRouter>
+      </SnackbarProvider>
+    </QueryClientProvider>
+  </Provider>
+  // </StrictMode>
 );
